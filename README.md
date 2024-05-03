@@ -49,3 +49,6 @@ aws cloudformation deploy --template-file ./stack.yml --stack-name github-action
 ```
 </details>
  
+ Once the stack is successfully deployed, note down the ARN of the IAM `github-actions-role` IAM role. [This quick link](https://us-east-1.console.aws.amazon.com/iam/home#/roles/details/github-actions-role?section=permissions) will take you to the appropriate page. 
+
+ Switch to [2-cdk](https://github.com/karchit/aws-cdk-github-workshop/tree/2-cdk) branch where we dive into creating our multi-environment CDK stack.
