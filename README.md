@@ -2,6 +2,15 @@
 
 In this section, we will configure our AWS and Github for the workshop
 
+
+## Github Setup
+Github Actions supports creation of environments, which are used by workflows for deployments. In this workshop we will create two environments: dev & prod. 
+To do this:
+- Go to your repository's Settings -> Environments -> New Environment
+- Create two environments named: dev, prod
+
+These environments will play a critical role in our deployments so we will be configuring these frequently. 
+
 ## AWS Setup
 
 All examples in workshop will use the Sydney (ap-southeast-2) region. You are free to use any other AWS Region.  
@@ -23,7 +32,8 @@ AWS and Github recommend using [Github OIDC provider](https://docs.github.com/en
 
 To expedite this process, we will deployed a pre-configured Cloudformation stack. Using console or CLI deploy [github-role-stack.yml](./github-role-stack.yml). 
 
-Note: You will have to provide a value for `SubjectClaimFilters` parameter which follows the pattern: `repo:OWNER/REPOSITORY:environment:NAME`. We will allow this role to be deployable from _all branches_ of _this repository_ to _all environments_ (more on environments later) so for this repository it would be something like: `repo:karchit/aws-cdk-workshop:*:*`
+>[!NOTE]
+>You will have to provide a value for `SubjectClaimFilters` parameter which follows the pattern: `repo:OWNER/REPOSITORY:environment:NAME`. We will allow this role to be deployable from _all branches_ of _this repository_ to _all environments_ so for this repository it would be something like: `repo:karchit/aws-cdk-workshop:*:*`
 
 <details open>
     <summary>CLI Command</summary>
