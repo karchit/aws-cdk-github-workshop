@@ -28,7 +28,7 @@ This will deploy a Cloudformation stack to your environment with all resources r
 #### Github Actions Role
 Github Actions runners can be self-hosted or they can be managed by Github. In this workshop, we will go with the latter as they're the quickest to get started with. With this approach we need to provide a way for Github to authenticate with our AWS environment in a secure manner. 
 
-AWS and Github recommend using [Github OIDC provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services). Essentially, we setup an IAM Role which is only allowed to be assumed by an Action workflow triggered from a Github Workflow.
+AWS and Github recommend using [Github OIDC provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services). Essentially, we setup an IAM Role which is only allowed to be assumed by an Action workflow triggered from a specific repository.
 
 To expedite this process, we will deployed a pre-configured Cloudformation stack. Using console or CLI deploy [github-role-stack.yml](./github-role-stack.yml). 
 
