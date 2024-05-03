@@ -29,8 +29,13 @@ Note: You will have to provide a value for `SubjectClaimFilters` parameter which
     <summary>CLI Command</summary>
     Replace SCF variable with your user/organisation. This can be run from the CloudShell environment you set up earlier for bootstrap.
 
-    SCF="repo:karchit/aws-cdk-workshop:*:*" &&
+```shell
+# Replace SCF value with your own github repo
+SCF="repo:karchit/aws-cdk-workshop:*:*" && \
 
-    aws cloudformation deploy --template-file /path_to_template/template.json --stack-name github-actions-role --parameter-overrides SubjectClaimFilters=$SCF
+wget -O stack.yml https://raw.githubusercontent.com/karchit/aws-cdk-github-workshop/1-cdk/github-role-stack.yml && \
+
+aws cloudformation deploy --template-file ./stack.yml --stack-name github-actions-role --parameter-overrides SubjectClaimFilters=$SCF --capabilities "CAPABILITY_NAMED_IAM"
+```
 </details>
  

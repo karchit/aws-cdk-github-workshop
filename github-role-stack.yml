@@ -27,7 +27,7 @@ Parameters:
       for examples of filtering by branch or deployment environment.
   Path:
     Type: String
-    Default: "/"
+    Default: /
     Description: IAM Path required for the role
   ManagedPolicyARNs:
     Type: CommaDelimitedList
@@ -64,13 +64,14 @@ Resources:
           - Sid: RoleForGitHubActions
             Effect: Allow
             Principal:
-              Federated: !GetAtt GitHubIdentityProvider.Arn
+              Federated: !GetAtt 
+                - GitHubIdentityProvider
+                - Arn
             Action:
               - 'sts:AssumeRoleWithWebIdentity'
             Condition:
               StringEquals:
                 'token.actions.githubusercontent.com:aud': !Ref AudienceList
-              StringLike:
                 'token.actions.githubusercontent.com:sub': !Ref SubjectClaimFilters
       Description: Service Role for use in GitHub Actions
       Path: !Ref Path
@@ -79,4 +80,6 @@ Resources:
 Outputs:
   ServiceRoleARN:
     Description: arn of service role for use in GitHub actions
-    Value: !GetAtt GitHubActionsServiceRole.Arn
+    Value: !GetAtt 
+      - GitHubActionsServiceRole
+      - Arn
