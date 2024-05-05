@@ -1,26 +1,42 @@
 # AWS CDK Github Actions Workshop
 
-In this step, we will setup our nginx stack. It will be a simple stack with a CI to automate its deployment to our AWS account. 
-Our stack won't cater for multiple environments yet. 
+In this final step of the workshop, we will modify our nginx stack and CI workflow to support multiple environments. Specifically, we will create cater for a dev and prod environment (development and production environments respectively). 
+
+In most organisations, these two environments would reside in two different AWS accounts but in a bid to keep things simple we will keep both environments in the same account.
+
+
+Before proceeding, delete the stack created in Step 2 via [Cloudformation console](https://ap-southeast-2.console.aws.amazon.com/cloudformation/home). This is so we can create new stacks which are environment specific. 
+
+You can review all the changes we've made to support multiple environments in this pull-request: https://github.com/karchit/aws-cdk-github-workshop/pull/3
 
 ### CDK Setup
-A simple CDK stack has been setup in [nginx directory](./nginx). It is a fairly straightforward stack with an EC2 instance using Amazon Linux 3. It installs and configures an Nginx using [userdata script](./nginx/lib/userdata.sh).
 
-Take a few minutes to understand how the stack has been created as we will be modifying it in the next step to support multiple environments. 
+CDK allows inputs to stack using ["runtime contexts"](https://docs.aws.amazon.com/cdk/v2/guide/context.html). These context key-value pairs can be passed in multiple ways, but we will employ the `cdk.context.json` file and very subtly through the `--context` parameter to the `cdk` command. 
+
+Our dev and prod environments will both contain an nginx server, however you've been asked to try the new-ish, slightly less expensive [ARM-based](https://aws.amazon.com/ec2/graviton/) processors so you decide to deploy this to your "dev" environment for testing. 
+
+To begin with, review the updated [lib/nginx.ts](./nginx/lib/nginx-stack.ts) file where we a new interface has been defined. This interface contains properties that vary between our environments. 
+
+In the same file, review the modified `NginxStack` class. The resources use the variable properties defined in our `NginxStackProps` interface. We The names of all resources now contain the name of the environment (`deployEnvironment` property). Finally, the `nginxInstance`'s cpu type, instance class and size are also based on the values fed in from the context. 
+
+> [!IMPORTANT] 
+> Cloudformation output values are unique within an AWS Account. Thus it is important to modify the output export names to contain the environment name. Of course, this isn't necessary if the two stacks are deployed to different AWS accounts. 
+
+Now ,check out [`cdk.context.json`](./nginx/cdk.context.json) file which contains the key-value pairs for the environment's properties. Our 'dev' environment will use `arm64` architecture and 'prod' will use `x86` architecture 
+
+The stack is initialised from [bin/nginx.ts](./nginx/bin/nginx.ts). It has been modified to fetch our variable context parameters and pass it on to the stack. Pay close attention to how `tryGetContext` function is utilised to fetch the environment from `cdk deploy` and then the environment's properties from `cdk.context.json`. 
 
 ### Github Actions Setup
 
-To deploy our stack, we will setup a CI workflow using Github Actions. A CI workflow has been created under [.github/workflows/deploy.yml](./.github/workflows/deploy.yml).
+To start, delete the `DEPLOY_ROLE_ARN` secret that we created in the last step. 
 
-For this workflow to work, you will need to add the `github-actions-role` ARN to your Github secrets. To do so, go to your repository's Settings > Secrets and Variables > Repository secrets. Create a secret with Name `DEPLOY_ROLE_ARN` and value as your role's ARN. 
+Next, go to your repository's Settings > Environments > New environment. Create two environments named "Dev" and "Prod". 
+Go into each environment and create a secret named `DEPLOY_ROLE_ARN` and put in the ARN of your `github-actions-role` you noted down in step 1. Doing so allows us to vary this value, which determines which AWS account to deploy our stack to, between environments
 
->[!NOTE]
-Workflows from non-default branches are not recognised by Github unless the same workflow's yaml (even an incomplete one) exists on the default branch. You can see that we set this up in our [Intro branch](https://github.com/karchit/aws-cdk-github-workshop/blob/0-intro/.github/workflows/deploy.yml)
+Now, we update the CI Deploy workflow to utilise these new Github environments. Take a few minutes to review the modified [deploy.yml](./.github/workflows/deploy.yml) file.
 
-Once you've added the secret, execute your CI Workflow by going to your repository > Actions > "Deploy Nginx Stack to AWS Environment" > Run workflow (on the right) > select this branch > Run workflow. This will kick off a workflow execution and deploy your stack to your AWS environment. 
+Deploy to both environments from the Github Actions tab. Once deployed, open the public IP/DNS of your NGINX instance and you should see the the name of the environment in the output. 
 
-Take a few minutes to click through each step. The "Deploy Stack" step will output your Nginx Instance's DNS and Private IP. Clicking through to either of the links will spit out an HTML generated by your Nginx instance. 
+Congratulations! You've successfully amended your stack to support multiple environments! Feel free to experiment with Github Actions and CDK - both of which are immensely powerful to rapidly provision and scale your infrastructure in AWS. 
 
-Be sure to review the deploy workflow if you haven't already. We will also be modifying this to support multiple environments. 
-
-Once you've reviewed the CDK, Workflow code and successfully set up your Nginx instance go ahead to the final step: [3-cdk-multi-env](https://github.com/karchit/aws-cdk-github-workshop/tree/3-cdk-multi-env)
+Once you're done, clean up your stacks by deleting them from Cloudformation console. 
