@@ -71,8 +71,9 @@ Resources:
               - 'sts:AssumeRoleWithWebIdentity'
             Condition:
               StringEquals:
-                'token.actions.githubusercontent.com:aud': !Ref AudienceList
-                'token.actions.githubusercontent.com:sub': !Ref SubjectClaimFilters
+                "token.actions.githubusercontent.com:aud": !Ref AudienceList
+              StringLike:
+                "token.actions.githubusercontent.com:sub": !Ref SubjectClaimFilters
       Description: Service Role for use in GitHub Actions
       Path: !Ref Path
       ManagedPolicyArns: !Ref ManagedPolicyARNs
