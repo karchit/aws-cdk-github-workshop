@@ -1,0 +1,43 @@
+name: 'Deploy Nginx Stack to AWS Environment'
+run-name: 'Deploy Nginx Stack to AWS Environment'
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  workflow_dispatch: # Allow manual deployments
+
+env:
+  AWS_REGION: "ap-southeast-2"
+  DEPLOY_ROLE_ARN: ${{ secrets.DEPLOY_ROLE_ARN }}
+
+
+jobs:
+  deploy_nginx:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Configure AWS Account Credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-skip-session-tagging: true
+          role-duration-seconds: 900
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.12.0"
+
+      - name: Install CDK dependencies and build
+        run: npm ci --silent && npm run build --silent
+        working-directory: ./nginx
+        
+      - name: Deploy stack
+        run: npm run cdk -- deploy --all --require-approval never
+        working-directory: ./nginx
