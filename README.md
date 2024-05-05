@@ -33,7 +33,7 @@ AWS and Github recommend using [Github OIDC provider](https://docs.github.com/en
 To expedite this process, we will deployed a pre-configured Cloudformation stack. Using console or CLI deploy [github-role-stack.yml](./github-role-stack.yml). 
 
 >[!NOTE]
->You will have to provide a value for `SubjectClaimFilters` parameter which follows the pattern: `repo:OWNER/REPOSITORY:environment:NAME`. We will allow this role to be deployable from _all branches_ of _this repository_ to _all environments_ so for this repository it would be something like: `repo:karchit/aws-cdk-workshop:*:*`
+>You will have to provide a value for `SubjectClaimFilters` parameter which follows the pattern: `repo:OWNER/REPOSITORY:environment:NAME`. We will allow this role to be deployable from _all branches_ of _this repository_ to _all environments_ so for this repository it would be something like: `repo:karchit/aws-cdk-github-workshop:*:*`
 
 <details open>
     <summary>CLI Command</summary>
