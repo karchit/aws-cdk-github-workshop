@@ -1,0 +1,16 @@
+{
+    "ENV:DEV": {
+        "nginxInstanceProps": {
+            "cpuType": "arm64",
+            "instanceClass": "t4g",
+            "instanceSize": "micro"
+        }
+    },
+    "ENV:PROD": {
+        "nginxInstanceProps": {
+            "cpuType": "x86_64",
+            "instanceClass": "t2",
+            "instanceSize": "micro"
+        }
+    }
+}
