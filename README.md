@@ -7,7 +7,7 @@ In most organisations, these two environments would reside in two different AWS 
 
 Before proceeding, delete the stack created in Step 2 via [Cloudformation console](https://ap-southeast-2.console.aws.amazon.com/cloudformation/home). This is so we can create new stacks which are environment specific. 
 
-You can review all the changes we've made to support multiple environments in this pull-request: https://github.com/karchit/aws-cdk-github-workshop/pull/1
+You can review all the changes we've made to support multiple environments in this pull-request: https://github.com/karchit/aws-cdk-github-workshop/pull/2
 
 ### CDK Setup
 
