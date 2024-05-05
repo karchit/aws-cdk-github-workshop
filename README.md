@@ -8,6 +8,9 @@ You'll need the following before starting this workshop:
 - AWS Account
 - A Github Account
 
+>[!WARNING]
+>While every effort has been made to minimise AWS costs arising from this workshop, you may incur higher than expected costs depending on how long you leave your infrastructure running. Be sure to cleanup all resources (described in the last step) once you've completed this exercise.
+ 
 And locally, you'll need these tools to complete this workshop:
 - Node.js
 - Git
