@@ -22,7 +22,3 @@ A few technologies we'll be working with:
 - Github Actions
 - AWS EC2
 - Nginx
-
-Ensure the following steps are completed before moving on to next step of this workshop on [1-cdk branch]():
-- [ ] Fork this repository
-- [ ] Setup all aforementioned tools (or use Github Codespace/DevContainer)
