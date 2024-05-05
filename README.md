@@ -23,4 +23,4 @@ A few technologies we'll be working with:
 - AWS EC2
 - Nginx
 
-To get started with the workshop, switch to the [1-setup](https://github.com/karchit/aws-cdk-github-workshop/tree/1-setup) branch.
+To get started with the workshop, please [fork this repository](https://github.com/karchit/aws-cdk-github-workshop/fork) into your own account/organisation and switch to the [1-setup](https://github.com/karchit/aws-cdk-github-workshop/tree/1-setup) branch.
