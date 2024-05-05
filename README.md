@@ -15,7 +15,7 @@ To deploy our stack, we will setup a CI workflow using Github Actions. A CI work
 For this workflow to work, you will need to add the `github-actions-role` ARN to your Github secrets. To do so, go to your repository's Settings > Secrets and Variables > Repository secrets. Create a secret with Name `DEPLOY_ROLE_ARN` and value as your role's ARN. 
 
 >[!NOTE]
-Workflows from non-default branches are not recognised by Github unless the same workflow's yaml (even an incomplete one) exists on the default branch. You can see that we set this up in our [Intro branch](https://github.com/karchit/aws-cdk-github-workshop/blob/0-intro/.github/workflows/deploy.yml)
+New workflows from non-default branches are not recognised by Github unless the same workflow's yaml (even an incomplete one) exists on the default branch. You can see that we set this up in our [Intro branch](https://github.com/karchit/aws-cdk-github-workshop/blob/0-intro/.github/workflows/deploy.yml)
 
 Once you've added the secret, execute your CI Workflow by going to your repository > Actions > "Deploy Nginx Stack to AWS Environment" > Run workflow (on the right) > select this branch > Run workflow. This will kick off a workflow execution and deploy your stack to your AWS environment. 
 
