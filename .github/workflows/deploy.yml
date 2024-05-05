@@ -1,5 +1,5 @@
 name: 'Deploy Nginx Stack to AWS Environment'
-run-name: 'Deploy Nginx Stack to AWS Environment'
+run-name: 'Deploy Nginx Stack to ${{ inputs.environment }} AWS Environment from ${{ github.ref_name }}'
 
 permissions:
   id-token: write
@@ -7,14 +7,18 @@ permissions:
 
 on:
   workflow_dispatch: # Allow manual deployments
+    inputs:
+      environment:
+        type: environment
+        description: AWS Environment
 
 env:
   AWS_REGION: "ap-southeast-2"
-  DEPLOY_ROLE_ARN: ${{ secrets.DEPLOY_ROLE_ARN }}
 
 
 jobs:
   deploy_nginx:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -25,7 +29,7 @@ jobs:
       - name: Configure AWS Account Credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
-          role-to-assume: ${{ env.DEPLOY_ROLE_ARN }}
+          role-to-assume: ${{ secrets.DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
           role-skip-session-tagging: true
           role-duration-seconds: 900
@@ -39,5 +43,5 @@ jobs:
         working-directory: ./nginx
         
       - name: Deploy stack
-        run: npm run cdk -- deploy --all --require-approval never
+        run: npm run cdk -- deploy --context env=${{ inputs.environment }} --all --require-approval never
         working-directory: ./nginx
