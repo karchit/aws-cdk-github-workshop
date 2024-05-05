@@ -21,7 +21,7 @@ export class NginxStack extends cdk.Stack {
     });
 
     // Create new security group which allows port 80 access from anywhere
-    const nginxSecurityGroup = new ec2.SecurityGroup(this, 'nginx-security-group', {
+    const nginxSecurityGroup = new ec2.SecurityGroup(this, 'NginxSecurityGroup', {
       vpc,
       securityGroupName: `nginx-security-group`,
       allowAllOutbound: true
@@ -48,12 +48,12 @@ export class NginxStack extends cdk.Stack {
       userData
     });
 
-    new cdk.CfnOutput(this, "nginxDns", {
+    new cdk.CfnOutput(this, "NginxDns", {
       value: `http://${nginxInstance.instancePublicDnsName}`,
       exportName: "nginxDns"
     });
 
-    new cdk.CfnOutput(this, "nginxIpUrl", {
+    new cdk.CfnOutput(this, "NginxIpUrl", {
       value: `http://${nginxInstance.instancePublicIp}`,
       exportName: "nginxIpUrl"
     });
