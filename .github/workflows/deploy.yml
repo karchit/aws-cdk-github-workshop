@@ -14,6 +14,7 @@ on:
 
 env:
   AWS_REGION: "ap-southeast-2"
+  DEPLOY_ENV: ${{ inputs.environment | awk '{print tolower($0)}' }} # Convert environment parameter to lower case
 
 
 jobs:
@@ -43,5 +44,5 @@ jobs:
         working-directory: ./nginx
         
       - name: Deploy stack
-        run: npm run cdk -- deploy --context env=${{ inputs.environment }} --all --require-approval never
+        run: npm run cdk -- deploy --context env=${{ env.DEPLOY_ENV }} --all --require-approval never
         working-directory: ./nginx
