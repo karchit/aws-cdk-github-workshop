@@ -4,7 +4,7 @@ In this section, we will configure our AWS and Github for the workshop
 
 
 ## Github Setup
-Github Actions supports creation of environments, which are used by workflows for deployments. In this workshop we will create two environments: dev & prod. 
+Github Actions supports creation of environments which are used by workflows for deployments. In this workshop we will create two environments: dev & prod. 
 To do this:
 - Go to your repository's Settings -> Environments -> New Environment
 - Create two environments named: dev, prod
@@ -16,7 +16,7 @@ These environments will play a critical role in our deployments so we will be co
 All examples in workshop will use the Sydney (ap-southeast-2) region. You are free to use any other AWS Region.  
 
 #### CDK Setup
-If you haven't used CDK in your AWS Account and the region you've chosen, you'll have to first run the bootstrap your environment. 
+If you haven't used CDK in your AWS Account and the region you've chosen, you'll have to first bootstrap your environment. 
 
 Simplest way to do this is open a CloudShell instance from AWS Console and run the following command:
 
