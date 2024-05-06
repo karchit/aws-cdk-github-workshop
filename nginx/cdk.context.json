@@ -3,7 +3,7 @@
         "nginxInstanceProps": {
             "cpuType": "arm64",
             "instanceClass": "t4g",
-            "instanceSize": "micro"
+            "instanceSize": "small"
         }
     },
     "ENV:PROD": {
