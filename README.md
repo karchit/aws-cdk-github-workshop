@@ -27,9 +27,9 @@ The stack is initialised from [bin/nginx.ts](./nginx/bin/nginx.ts). It has been 
 
 ### Github Actions Setup
 
-To start, delete the `DEPLOY_ROLE_ARN` secret that we created in the last step. 
+To start, delete the `DEPLOY_ROLE_ARN` repository secret that we created in the last step. 
 
-Go into each Github environment you created in Step 1 and create a secret named `DEPLOY_ROLE_ARN` and put in the ARN of your `github-actions-role` you noted down in step 1. Doing so allows us to vary this value, which determines which AWS account to deploy our stack to, between environments
+Go into each Github environment you created in Step 1 and create an environment secret named `DEPLOY_ROLE_ARN` and put in the ARN of your `github-actions-role`. Doing so allows us to vary this value, which determines which AWS account to deploy our stack to, between environments
 
 Now, we update the CI Deploy workflow to utilise these new Github environments. Take a few minutes to review the modified [deploy.yml](./.github/workflows/deploy.yml) file.
 
