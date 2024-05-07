@@ -41,7 +41,7 @@ To expedite this process, we will deployed a pre-configured Cloudformation stack
 
 ```shell
 # Replace SCF value with your own github repository name
-SCF="repo:karchit/aws-cdk-workshop:*" && \
+SCF="repo:karchit/aws-cdk-github-workshop:*" && \
 
 wget -O stack.yml https://raw.githubusercontent.com/karchit/aws-cdk-github-workshop/1-cdk/github-role-stack.yml && \
 
